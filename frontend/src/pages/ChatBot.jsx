@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { GiMoonOrbit } from "react-icons/gi";
 
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = "https://orbit.sharexpress.in";
 
 /* ─── Typing Animation ─── */
 function TypingIndicator() {
