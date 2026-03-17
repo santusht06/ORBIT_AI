@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -16,21 +17,23 @@ if DB_ENABLED:
     engine = create_engine(
         DATABASE_URL,
         pool_pre_ping=True,
-        pool_size=10,
-        max_overflow=20
+        pool_size=5,
+        max_overflow=2,
+        pool_timeout=30,
+        pool_recycle=1800,
     )
-    
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    
+
     # Base class for models
     Base = declarative_base()
-    
+
     print("✅ Database configuration loaded")
 else:
     engine = None
     SessionLocal = None
     Base = None
     print("⚠️ DATABASE_URL not found - running without database persistence")
+
 
 # Dependency to get database session
 def get_db():
@@ -39,12 +42,13 @@ def get_db():
         # Return None if database is not configured
         yield None
         return
-    
+
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
 
 # Initialize database (create tables)
 def init_db():
@@ -52,11 +56,13 @@ def init_db():
     if not DB_ENABLED:
         print("⚠️ Database not configured - skipping table creation")
         return False
-    
+
     from models import database_models
+
     Base.metadata.create_all(bind=engine)
     print("✅ Database tables created successfully!")
     return True
+
 
 # Test database connection
 def test_connection():
@@ -64,7 +70,7 @@ def test_connection():
     if not DB_ENABLED:
         print("⚠️ Database not configured")
         return False
-    
+
     try:
         with engine.connect() as conn:
             print("✅ Database connection successful!")
