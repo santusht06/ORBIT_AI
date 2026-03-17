@@ -16,8 +16,7 @@ import {
 } from "lucide-react";
 import { GiMoonOrbit } from "react-icons/gi";
 
-const API_BASE_URL = "http://localhost:8000";
-
+const API_BASE_URL = "https://orbit-api.sharexpress.in";
 /* ─── Typing Animation ─── */
 function TypingIndicator() {
   return (
@@ -121,7 +120,10 @@ function MessageBubble({ msg, getFileIcon, idx }) {
   return (
     <div
       className={`flex animate-fade-slide-up ${isUser ? "justify-end" : "justify-start"}`}
-      style={{ animationDelay: `${idx * 0.04}s`, animationFillMode: "backwards" }}
+      style={{
+        animationDelay: `${idx * 0.04}s`,
+        animationFillMode: "backwards",
+      }}
     >
       {/* Assistant Avatar */}
       {!isUser && !isSystem && (
@@ -169,7 +171,14 @@ function MessageBubble({ msg, getFileIcon, idx }) {
             <span style={{ truncate: true }}>{msg.file}</span>
           </div>
         )}
-        <div style={{ whiteSpace: "pre-wrap", wordBreak: "break-word", lineHeight: 1.65, fontSize: 14 }}>
+        <div
+          style={{
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
+            lineHeight: 1.65,
+            fontSize: 14,
+          }}
+        >
           {msg.content}
         </div>
         {msg.model && (
@@ -198,10 +207,26 @@ function MessageBubble({ msg, getFileIcon, idx }) {
 /* ─── Welcome Screen ─── */
 function WelcomeScreen() {
   const suggestions = [
-    { icon: <Brain style={{ width: 18, height: 18 }} />, text: "Analyze a document", color: "var(--accent-purple)" },
-    { icon: <Sparkles style={{ width: 18, height: 18 }} />, text: "Summarize key points", color: "var(--accent-blue)" },
-    { icon: <Zap style={{ width: 18, height: 18 }} />, text: "Ask me anything", color: "var(--accent-cyan)" },
-    { icon: <FileText style={{ width: 18, height: 18 }} />, text: "Upload a file to start", color: "var(--accent-pink)" },
+    {
+      icon: <Brain style={{ width: 18, height: 18 }} />,
+      text: "Analyze a document",
+      color: "var(--accent-purple)",
+    },
+    {
+      icon: <Sparkles style={{ width: 18, height: 18 }} />,
+      text: "Summarize key points",
+      color: "var(--accent-blue)",
+    },
+    {
+      icon: <Zap style={{ width: 18, height: 18 }} />,
+      text: "Ask me anything",
+      color: "var(--accent-cyan)",
+    },
+    {
+      icon: <FileText style={{ width: 18, height: 18 }} />,
+      text: "Upload a file to start",
+      color: "var(--accent-pink)",
+    },
   ];
 
   return (
@@ -229,7 +254,8 @@ function WelcomeScreen() {
           style={{
             position: "absolute",
             inset: -16,
-            background: "radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)",
+            background:
+              "radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)",
             borderRadius: "50%",
             animation: "pulseGlow 3s ease-in-out infinite",
           }}
@@ -247,8 +273,16 @@ function WelcomeScreen() {
       >
         <span className="animate-gradient-text">How can I help you?</span>
       </h2>
-      <p style={{ color: "var(--text-secondary)", fontSize: 14, marginBottom: 36, maxWidth: 400 }}>
-        ORBIT is your intelligent AI assistant. Ask anything, upload documents, and explore knowledge orbiting around you.
+      <p
+        style={{
+          color: "var(--text-secondary)",
+          fontSize: 14,
+          marginBottom: 36,
+          maxWidth: 400,
+        }}
+      >
+        ORBIT is your intelligent AI assistant. Ask anything, upload documents,
+        and explore knowledge orbiting around you.
       </p>
 
       <div
@@ -284,7 +318,13 @@ function WelcomeScreen() {
             >
               {s.icon}
             </div>
-            <span style={{ fontSize: 13, fontWeight: 500, color: "var(--text-secondary)" }}>
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 500,
+                color: "var(--text-secondary)",
+              }}
+            >
               {s.text}
             </span>
           </div>
@@ -321,28 +361,38 @@ export default function ChatBot() {
   const loadConversations = useCallback(async () => {
     try {
       const formData = new FormData();
-      const response = await fetch(`${API_BASE_URL}/chat/?action=get_conversations`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/chat/?action=get_conversations`,
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
       const data = await response.json();
       if (data.status === "success") {
-        const conversationsWithMessages = data.conversations.filter((conv) => conv.message_count > 0);
+        const conversationsWithMessages = data.conversations.filter(
+          (conv) => conv.message_count > 0,
+        );
         const conversationsWithTitles = await Promise.all(
           conversationsWithMessages.map(async (conv) => {
             try {
               const historyFormData = new FormData();
               const historyResponse = await fetch(
                 `${API_BASE_URL}/chat/?action=get_history&session_id=${conv.session_id}`,
-                { method: "POST", body: historyFormData }
+                { method: "POST", body: historyFormData },
               );
               const historyData = await historyResponse.json();
-              const firstUserMessage = historyData.messages?.find((msg) => msg.role === "user");
-              return { ...conv, displayTitle: firstUserMessage?.content || "Untitled chat" };
+              const firstUserMessage = historyData.messages?.find(
+                (msg) => msg.role === "user",
+              );
+              return {
+                ...conv,
+                displayTitle: firstUserMessage?.content || "Untitled chat",
+              };
             } catch {
               return { ...conv, displayTitle: "Untitled chat" };
             }
-          })
+          }),
         );
         setConversations((prev) => {
           const map = new Map();
@@ -362,7 +412,7 @@ export default function ChatBot() {
       const formData = new FormData();
       const response = await fetch(
         `${API_BASE_URL}/chat/?action=get_context&session_id=${sessionId}`,
-        { method: "POST", body: formData }
+        { method: "POST", body: formData },
       );
       const data = await response.json();
       setContextInfo(data);
@@ -376,7 +426,7 @@ export default function ChatBot() {
       const formData = new FormData();
       const response = await fetch(
         `${API_BASE_URL}/chat/?action=get_history&session_id=${convSessionId}`,
-        { method: "POST", body: formData }
+        { method: "POST", body: formData },
       );
       const data = await response.json();
       if (data.status === "success") {
@@ -395,7 +445,9 @@ export default function ChatBot() {
     }
   }, []);
 
-  useEffect(() => { loadConversations(); }, [loadConversations]);
+  useEffect(() => {
+    loadConversations();
+  }, [loadConversations]);
 
   useEffect(() => {
     if (sessionId) loadContextInfo();
@@ -408,7 +460,8 @@ export default function ChatBot() {
 
   const getFileIcon = (filename) => {
     const ext = filename?.toLowerCase().split(".").pop();
-    if (["jpg", "jpeg", "png", "gif", "webp", "bmp"].includes(ext)) return <Image style={{ width: 14, height: 14 }} />;
+    if (["jpg", "jpeg", "png", "gif", "webp", "bmp"].includes(ext))
+      return <Image style={{ width: 14, height: 14 }} />;
     if (ext === "pdf") return <FileText style={{ width: 14, height: 14 }} />;
     return <File style={{ width: 14, height: 14 }} />;
   };
@@ -446,7 +499,11 @@ export default function ChatBot() {
         const newTitle = generateTitleFromMessage(currentInput);
         setSessionId(data.session_id);
         setConversations((prev) => [
-          { session_id: data.session_id, message_count: 1, displayTitle: newTitle },
+          {
+            session_id: data.session_id,
+            message_count: 1,
+            displayTitle: newTitle,
+          },
           ...prev,
         ]);
       }
@@ -454,16 +511,28 @@ export default function ChatBot() {
       if (data.answer) {
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: data.answer, model: data.model_used, mode: data.mode, source: data.source },
+          {
+            role: "assistant",
+            content: data.answer,
+            model: data.model_used,
+            mode: data.mode,
+            source: data.source,
+          },
         ]);
       } else if (data.message) {
-        setMessages((prev) => [...prev, { role: "system", content: data.message }]);
+        setMessages((prev) => [
+          ...prev,
+          { role: "system", content: data.message },
+        ]);
       }
 
       await loadConversations();
       loadContextInfo();
     } catch (error) {
-      setMessages((prev) => [...prev, { role: "system", content: `Error: ${error.message}` }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "system", content: `Error: ${error.message}` },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -480,11 +549,14 @@ export default function ChatBot() {
       const formData = new FormData();
       const response = await fetch(
         `${API_BASE_URL}/chat/?action=clear_context&session_id=${sessionId}`,
-        { method: "POST", body: formData }
+        { method: "POST", body: formData },
       );
       const data = await response.json();
       if (data.status === "success") {
-        setMessages((prev) => [...prev, { role: "system", content: "Context cleared successfully" }]);
+        setMessages((prev) => [
+          ...prev,
+          { role: "system", content: "Context cleared successfully" },
+        ]);
         loadContextInfo();
       }
     } catch (error) {
@@ -538,7 +610,8 @@ export default function ChatBot() {
           borderRight: "1px solid var(--border-subtle)",
           display: "flex",
           flexDirection: "column",
-          transition: "width 0.3s cubic-bezier(0.4,0,0.2,1), min-width 0.3s cubic-bezier(0.4,0,0.2,1)",
+          transition:
+            "width 0.3s cubic-bezier(0.4,0,0.2,1), min-width 0.3s cubic-bezier(0.4,0,0.2,1)",
           overflow: "hidden",
           position: "relative",
           zIndex: 20,
@@ -554,7 +627,14 @@ export default function ChatBot() {
           }}
         >
           {/* Brand */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "4px 4px 8px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "4px 4px 8px",
+            }}
+          >
             <OrbitLogo size={28} />
             <span
               className="animate-gradient-text"
@@ -615,7 +695,12 @@ export default function ChatBot() {
               }}
             >
               <MessageSquare
-                style={{ width: 28, height: 28, margin: "0 auto 8px", opacity: 0.3 }}
+                style={{
+                  width: 28,
+                  height: 28,
+                  margin: "0 auto 8px",
+                  opacity: 0.3,
+                }}
               />
               No conversations yet
             </div>
@@ -634,14 +719,20 @@ export default function ChatBot() {
                     padding: "9px 12px",
                     borderRadius: 10,
                     marginBottom: 3,
-                    background: isActive ? "rgba(139,92,246,0.12)" : "transparent",
+                    background: isActive
+                      ? "rgba(139,92,246,0.12)"
+                      : "transparent",
                     border: "none",
-                    color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+                    color: isActive
+                      ? "var(--text-primary)"
+                      : "var(--text-secondary)",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "flex-start",
                     gap: 9,
-                    borderLeft: isActive ? "2px solid var(--accent-purple)" : "2px solid transparent",
+                    borderLeft: isActive
+                      ? "2px solid var(--accent-purple)"
+                      : "2px solid transparent",
                   }}
                 >
                   <MessageSquare
@@ -650,7 +741,9 @@ export default function ChatBot() {
                       height: 13,
                       flexShrink: 0,
                       marginTop: 2,
-                      color: isActive ? "var(--accent-purple)" : "var(--text-muted)",
+                      color: isActive
+                        ? "var(--accent-purple)"
+                        : "var(--text-muted)",
                     }}
                   />
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -665,8 +758,15 @@ export default function ChatBot() {
                     >
                       {preview}
                     </div>
-                    <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
-                      {conv.message_count} {conv.message_count === 1 ? "message" : "messages"}
+                    <div
+                      style={{
+                        fontSize: 11,
+                        color: "var(--text-muted)",
+                        marginTop: 2,
+                      }}
+                    >
+                      {conv.message_count}{" "}
+                      {conv.message_count === 1 ? "message" : "messages"}
                     </div>
                   </div>
                 </button>
@@ -750,7 +850,14 @@ export default function ChatBot() {
       </div>
 
       {/* ── Main Chat Area ── */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+        }}
+      >
         {/* Header */}
         <div
           className="glass"
@@ -794,11 +901,17 @@ export default function ChatBot() {
             <div>
               <div
                 className="animate-gradient-text"
-                style={{ fontSize: 17, fontWeight: 700, letterSpacing: "-0.3px" }}
+                style={{
+                  fontSize: 17,
+                  fontWeight: 700,
+                  letterSpacing: "-0.3px",
+                }}
               >
                 ORBIT
               </div>
-              <div style={{ fontSize: 11, color: "var(--text-muted)" }}>AI Assistant</div>
+              <div style={{ fontSize: 11, color: "var(--text-muted)" }}>
+                AI Assistant
+              </div>
             </div>
           </div>
 
@@ -830,7 +943,15 @@ export default function ChatBot() {
                 animation: "pulseGlow 2s ease-in-out infinite",
               }}
             />
-            <span style={{ fontSize: 11, color: "var(--accent-green)", fontWeight: 500 }}>Online</span>
+            <span
+              style={{
+                fontSize: 11,
+                color: "var(--accent-green)",
+                fontWeight: 500,
+              }}
+            >
+              Online
+            </span>
           </div>
         </div>
 
@@ -847,9 +968,23 @@ export default function ChatBot() {
           {messages.length === 0 ? (
             <WelcomeScreen />
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 760, margin: "0 auto", width: "100%" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 16,
+                maxWidth: 760,
+                margin: "0 auto",
+                width: "100%",
+              }}
+            >
               {messages.map((msg, idx) => (
-                <MessageBubble key={idx} msg={msg} getFileIcon={getFileIcon} idx={idx} />
+                <MessageBubble
+                  key={idx}
+                  msg={msg}
+                  getFileIcon={getFileIcon}
+                  idx={idx}
+                />
               ))}
               {loading && <TypingIndicator />}
               <div ref={messagesEndRef} />
@@ -857,7 +992,12 @@ export default function ChatBot() {
           )}
           {messages.length > 0 && loading && (
             <div
-              style={{ maxWidth: 760, margin: "0 auto", width: "100%", display: messages.length === 0 ? "none" : "block" }}
+              style={{
+                maxWidth: 760,
+                margin: "0 auto",
+                width: "100%",
+                display: messages.length === 0 ? "none" : "block",
+              }}
             />
           )}
         </div>
@@ -891,8 +1031,19 @@ export default function ChatBot() {
                   padding: "8px 12px",
                 }}
               >
-                <div style={{ color: "var(--accent-purple)" }}>{getFileIcon(file.name)}</div>
-                <span style={{ fontSize: 13, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--text-secondary)" }}>
+                <div style={{ color: "var(--accent-purple)" }}>
+                  {getFileIcon(file.name)}
+                </div>
+                <span
+                  style={{
+                    fontSize: 13,
+                    flex: 1,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    color: "var(--text-secondary)",
+                  }}
+                >
                   {file.name}
                 </span>
                 <button
@@ -996,30 +1147,57 @@ export default function ChatBot() {
                 disabled={loading || (!input.trim() && !file)}
                 style={{
                   padding: "9px 10px",
-                  background: loading || (!input.trim() && !file)
-                    ? "var(--bg-tertiary)"
-                    : "var(--gradient-primary)",
+                  background:
+                    loading || (!input.trim() && !file)
+                      ? "var(--bg-tertiary)"
+                      : "var(--gradient-primary)",
                   border: "none",
                   borderRadius: 11,
-                  color: loading || (!input.trim() && !file) ? "var(--text-muted)" : "#fff",
-                  cursor: loading || (!input.trim() && !file) ? "not-allowed" : "pointer",
+                  color:
+                    loading || (!input.trim() && !file)
+                      ? "var(--text-muted)"
+                      : "#fff",
+                  cursor:
+                    loading || (!input.trim() && !file)
+                      ? "not-allowed"
+                      : "pointer",
                   display: "flex",
                   alignItems: "center",
                   gap: 6,
                   transition: "all 0.2s ease",
                   flexShrink: 0,
                   alignSelf: "flex-end",
-                  boxShadow: loading || (!input.trim() && !file)
-                    ? "none"
-                    : "0 4px 16px rgba(139,92,246,0.4)",
-                  transform: loading || (!input.trim() && !file) ? "scale(1)" : "scale(1.02)",
+                  boxShadow:
+                    loading || (!input.trim() && !file)
+                      ? "none"
+                      : "0 4px 16px rgba(139,92,246,0.4)",
+                  transform:
+                    loading || (!input.trim() && !file)
+                      ? "scale(1)"
+                      : "scale(1.02)",
                 }}
               >
                 {loading ? (
-                  <div style={{ display: "flex", gap: 3, alignItems: "center", padding: "0 4px" }}>
-                    <div className="typing-dot" style={{ width: 5, height: 5 }} />
-                    <div className="typing-dot" style={{ width: 5, height: 5 }} />
-                    <div className="typing-dot" style={{ width: 5, height: 5 }} />
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 3,
+                      alignItems: "center",
+                      padding: "0 4px",
+                    }}
+                  >
+                    <div
+                      className="typing-dot"
+                      style={{ width: 5, height: 5 }}
+                    />
+                    <div
+                      className="typing-dot"
+                      style={{ width: 5, height: 5 }}
+                    />
+                    <div
+                      className="typing-dot"
+                      style={{ width: 5, height: 5 }}
+                    />
                   </div>
                 ) : (
                   <Send style={{ width: 16, height: 16 }} />

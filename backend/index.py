@@ -10,25 +10,26 @@ load_dotenv()
 app = FastAPI(
     title="AI Chatbot API with Database",
     description="Multi-model AI chatbot with PostgreSQL database persistence",
-    version="2.0.0"
+    version="2.0.0",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://orbit.sharexpress.in",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
 @app.on_event("startup")
 async def startup_event():
     """Initialize database on startup"""
     print("\n🚀 Starting AI Chatbot API...")
-    
-    
+
     if test_connection():
-        
         init_db()
         print("✅ Database initialized successfully!\n")
     else:
@@ -50,11 +51,12 @@ async def root():
             "Conversation tracking",
             "Message history",
             "File storage",
-            "Multi-model AI"
-        ]
+            "Multi-model AI",
+        ],
     }
 
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
