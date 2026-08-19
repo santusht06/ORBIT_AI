@@ -23,9 +23,9 @@ The frontend is built using React, with the following key features:
 
 ## Installation
 To install the project, follow these steps:
-1. Clone the repository
-2. Navigate to the project directory
-3. Run `docker-compose up` to start the containers
+1. Clone the repository.  
+2. Navigate to the project directory.  
+3. Ensure Docker and Docker Compose are installed on your machine.  
 
 ## Usage
 To use the application, follow these steps:
