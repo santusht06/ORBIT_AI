@@ -1,11 +1,11 @@
 # ORBIT_AI
 <h1>Project Overview</h1>
-<p>This project is a AI-powered chatbot application, utilizing a combination of natural language processing and machine learning to provide an interactive experience.</p>
+<p>This project is an AI‑powered chatbot application, utilizing a combination of natural language processing and machine learning to provide an interactive experience.</p>
 
 ## Project Structure
 The project is divided into two main components: 
-- Backend: Handles the server-side logic, database interactions, and API routing.
-- Frontend: Handles the client-side logic, user interface, and user experience.
+- **Backend**: Handles the server‑side logic, database interactions, and API routing.
+- **Frontend**: Handles the client‑side logic, user interface, and user experience.
 
 ### Backend
 The backend is built using Python, with the following key features:
