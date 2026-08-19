@@ -26,11 +26,13 @@ To install the project, follow these steps:
 1. Clone the repository.  
 2. Navigate to the project directory.  
 3. Ensure Docker and Docker Compose are installed on your machine.  
+4. (Optional) Create a `.env` file in `backend/` with the required environment variables (refer to `backend/.env.example` if available).  
+5. Run `docker-compose up --build` to build and start the containers.
 
 ## Usage
-To use the application, follow these steps:
-1. Open a web browser and navigate to `http://localhost:3000`
-2. Interact with the chatbot by sending messages and receiving responses
+1. Open a web browser and navigate to `http://localhost:3000` (frontend).  
+2. The backend API is available at `http://localhost:8000`.  
+3. Interact with the chatbot by sending messages and receiving responses through the UI.
 
 <h1>Badges</h1>
 <!-- Badges will be added here -->
