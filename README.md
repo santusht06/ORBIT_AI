@@ -24,15 +24,29 @@ Built with React. Main directories:
 - **Assets** – static files such as images in `frontend/src/assets/`.
 - **Styles** – global CSS in `frontend/src/index.css`.
 
-2. Navigate to the project directory.  
-3. Ensure Docker and Docker Compose are installed on your machine.  
-4. (Optional) Create a `.env` file in `backend/` with the required environment variables (refer to `backend/.env.example` if available).  
-5. Run `docker-compose up --build` to build and start the containers.
+## Installation
+Follow these steps to get the project running locally:
+
+1. Clone the repository.  
+2. Navigate to the project root.  
+3. Ensure **Docker** and **Docker Compose** are installed.  
+4. (Optional) Create a `.env` file inside `backend/` with the required variables. Use `backend/.env.example` as a reference if it exists.  
+5. Build and start the containers:
+
+```bash
+docker-compose up --build
+```
+
+6. To stop the services, run:
+
+```bash
+docker-compose down
+```
 
 ## Usage
-1. Open a web browser and navigate to `http://localhost:3000` (frontend).  
-2. The backend API is available at `http://localhost:8000`.  
-3. Interact with the chatbot by sending messages and receiving responses through the UI.
+1. Open a browser and go to `http://localhost:3000` to view the frontend.  
+2. The FastAPI backend is reachable at `http://localhost:8000`.  
+3. Interact with the chatbot through the UI; messages are sent to the unified chat endpoint (`POST /chat/`) which persists conversation data in PostgreSQL.
 
 <h1>Badges</h1>
 <!-- Badges will be added here -->
