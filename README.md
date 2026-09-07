@@ -1,29 +1,29 @@
 # ORBIT_AI
 <h1>Project Overview</h1>
-<p>This project is an AI‑powered chatbot application, utilizing a combination of natural language processing and machine learning to provide an interactive experience.</p>
+<p>This project is an AI‑powered chatbot application that combines natural language processing and machine learning to deliver an interactive conversational experience.</p>
 
 ## Project Structure
-The project is divided into two main components: 
-- **Backend**: Handles the server‑side logic, database interactions, and API routing.
-- **Frontend**: Handles the client‑side logic, user interface, and user experience.
+The repository is organized into two main components:
+
+- **Backend** – server‑side logic, database interactions, and API routing.
+- **Frontend** – client‑side UI built with React.
 
 ### Backend
-The backend is built using Python, with the following key features:
-- **Database Models**: Defined in `backend/models/database_models.py` and `backend/models/User_Model.py`
-- **Controllers**: Handle API requests and interactions, defined in `backend/controllers/Chat_controller.py`
-- **Utils**: Various utility functions for database interactions, text extraction, and more, defined in `backend/utils/`
-- **Routers**: Define API routes, defined in `backend/routers/Chat_route.py`
-- **Lib**: Configuration files for Groq models, database, Groq, and Cloudinary, defined in `backend/lib/`
+Implemented in Python with FastAPI. Key parts include:
+
+- **Database Models** – defined in `backend/models/database_models.py` and `backend/models/User_Model.py`.
+- **Controllers** – business logic for the chatbot, located in `backend/controllers/Chat_controller.py`.
+- **Utils** – helper functions for database operations, text extraction, etc., under `backend/utils/`.
+- **Routers** – API endpoints, e.g., `backend/routers/Chat_route.py`.
+- **Lib** – configuration for Groq models, database connections, and Cloudinary in `backend/lib/`.
 
 ### Frontend
-The frontend is built using React, with the following key features:
-- **Components**: Defined in `frontend/src/pages/` and `frontend/src/`
-- **Assets**: Static assets, such as images, defined in `frontend/src/assets/`
-- **Styles**: CSS styles, defined in `frontend/src/index.css`
+Built with React. Main directories:
 
-## Installation
-To install the project, follow these steps:
-1. Clone the repository.  
+- **Components** – UI components in `frontend/src/pages/` and `frontend/src/`.
+- **Assets** – static files such as images in `frontend/src/assets/`.
+- **Styles** – global CSS in `frontend/src/index.css`.
+
 2. Navigate to the project directory.  
 3. Ensure Docker and Docker Compose are installed on your machine.  
 4. (Optional) Create a `.env` file in `backend/` with the required environment variables (refer to `backend/.env.example` if available).  
