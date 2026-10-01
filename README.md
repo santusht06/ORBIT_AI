@@ -25,6 +25,8 @@ Built with React. Main directories:
 - **Components** – UI components in `frontend/src/pages/` and `frontend/src/`.
 - **Assets** – static files such as images in `frontend/src/assets/`.
 - **Styles** – global CSS in `frontend/src/index.css`.
+
+## Installation
 Follow these steps to get the project running locally:
 
 1. Clone the repository.  
@@ -36,8 +38,6 @@ Follow these steps to get the project running locally:
 ```bash
 docker-compose up --build
 ```
-
-6. To stop the services, run:
 
 ```bash
 docker-compose down
