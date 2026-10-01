@@ -11,6 +11,8 @@ The repository is organized into two main components:
 - **Frontend** – client‑side UI built with React.
 
 ### Backend
+Implemented in Python with FastAPI. Key parts include:
+
 - **Database Models** – defined in `backend/models/database_models.py` and `backend/models/User_Model.py`.
 - **Controllers** – business logic for the chatbot, located in `backend/controllers/Chat_controller.py`.
 - **Utils** – helper functions for database operations, text extraction, etc., under `backend/utils/`.
@@ -23,8 +25,6 @@ Built with React. Main directories:
 - **Components** – UI components in `frontend/src/pages/` and `frontend/src/`.
 - **Assets** – static files such as images in `frontend/src/assets/`.
 - **Styles** – global CSS in `frontend/src/index.css`.
-
-## Installation
 Follow these steps to get the project running locally:
 
 1. Clone the repository.  
