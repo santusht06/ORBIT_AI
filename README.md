@@ -1,4 +1,6 @@
 # ORBIT_AI
+
+![AI Maintained](https://img.shields.io/badge/readme-AI%20maintained-blue)
 <h1>Project Overview</h1>
 <p>This project is an AI‑powered chatbot application that combines natural language processing and machine learning to deliver an interactive conversational experience.</p>
 
@@ -9,8 +11,6 @@ The repository is organized into two main components:
 - **Frontend** – client‑side UI built with React.
 
 ### Backend
-Implemented in Python with FastAPI. Key parts include:
-
 - **Database Models** – defined in `backend/models/database_models.py` and `backend/models/User_Model.py`.
 - **Controllers** – business logic for the chatbot, located in `backend/controllers/Chat_controller.py`.
 - **Utils** – helper functions for database operations, text extraction, etc., under `backend/utils/`.
