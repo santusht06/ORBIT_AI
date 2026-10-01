@@ -39,13 +39,15 @@ Follow these steps to get the project running locally:
 docker-compose up --build
 ```
 
+6. To stop the services, run:
+
 ```bash
 docker-compose down
 ```
 
 ## Usage
-1. Open a browser and go to `http://localhost:3000` to view the frontend.  
-2. The FastAPI backend is reachable at `http://localhost:8000`.  
+1. Open a browser and go to `[http://localhost:3000`](http://localhost:3000`) to view the frontend.  
+2. The FastAPI backend is reachable at `[http://localhost:8000`.](http://localhost:8000`.)  
 3. Interact with the chatbot through the UI; messages are sent to the unified chat endpoint (`POST /chat/`) which persists conversation data in PostgreSQL.
 
 <h1>Badges</h1>
